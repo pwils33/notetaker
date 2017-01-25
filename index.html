@@ -1,9 +1,17 @@
 <!DOCTYPE html>
 <head>
   <script src="methods.js"></script>
+  <link rel="stylesheet" href="main.css" />
 </head>
-<body>
+<body onload="initializeNoteTable()">
 
-<textarea>Take notes here!</textarea>
+  <div id="container">
+    <div id="notes">
+      <table id="noteTable" style="width:100%;"></table>
+    </div>
+    <div id="noteEdit">
+      <textarea id="edit" placeholder="Take notes here!" style="width:100%;height:100%;"></textarea>
+    </div>
+  </div>
 
 </body>
