@@ -65,6 +65,7 @@ function deleteNote() {
 }
 
 function createNote() {
+  saveNote();
   var temp = prompt("What would you like to call your note?");
   if (!temp) {
       return;
