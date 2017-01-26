@@ -25,7 +25,9 @@ function getNoteNames() {
 }
 
 function openNote(row) {
-  saveNote();
+  if (window.currentNote) {
+    saveNote();
+  }
   var key = row.cells[0].innerHTML;
   window.currentNote = key;
   console.log("I got called with " + key);
@@ -65,7 +67,9 @@ function deleteNote() {
 }
 
 function createNote() {
-  saveNote();
+  if (window.currentNote) {
+    saveNote();
+  }
   var temp = prompt("What would you like to call your note?");
   if (!temp) {
       return;
