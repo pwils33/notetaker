@@ -22,10 +22,11 @@ table, th, td {
 }
 
 .note {
-  
+
 }
 
 html, body {
   margin: 0;
+  margin-top: 26px;
   padding: 0;
 }

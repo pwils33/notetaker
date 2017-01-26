@@ -56,18 +56,45 @@ function openNote(row) {
   document.getElementById("edit").value = localStorage.getItem(key);
 }
 
-function saveNote(note) {
-  if (currentNote === "") {
-    currentNote = prompt("What would you like to call your note?")
+function saveNote() {
+  var note = document.getElementById("edit").value;
+  var temp;
+  if (window.currentNote === "") {
+    temp = prompt("What would you like to call your note?");
   }
-  localStorage.setItem(currentNote,note);
+  if (!temp && !window.currentNote) {
+    return;
+  }
+  window.currentNote = temp;
+  localStorage.setItem(window.currentNote,note);
   initializeNoteTable();
 }
 
-function deleteNote(key) {
-  localStorage.removeItem(key);
+function renameNote() {
+  var temp = prompt("What would you like to call you note?");
+  if (!temp) {
+      console.log("returning because word is null");
+      return;
+  }
+  localStorage.removeItem(window.currentNote);
+  window.currentNote = temp;
+  localStorage.setItem(window.currentNote,document.getElementById("edit").value);
 }
 
-function createNote(key) {
-  localStorage.setItem(key,"");
+function deleteNote() {
+  localStorage.removeItem(window.currentNote);
+  window.currentNote = "";
+  document.getElementById("edit").value = "";
+  initializeNoteTable();
+}
+
+function createNote() {
+  var temp = prompt("What would you like to call your note?");
+  if (!temp) {
+      return;
+  }
+  window.currentNote = temp;
+  document.getElementById("edit").value = "";
+  localStorage.setItem(window.currentNote,"");
+  initializeNoteTable();
 }
