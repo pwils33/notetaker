@@ -26,11 +26,12 @@ function getNoteNames() {
 
 function openNote(row) {
   if (window.currentNote) {
+    // console.log("saving note "  + window.currentNote);
     saveNote();
   }
   var key = row.cells[0].innerHTML;
   window.currentNote = key;
-  console.log("I got called with " + key);
+  // console.log("I got called with " + key);
   document.getElementById("edit").value = localStorage.getItem(key);
 }
 
@@ -38,6 +39,7 @@ function saveNote() {
   var note = document.getElementById("edit").value;
   var temp;
   if (!window.currentNote) {
+    // console.log("prompting from saveNote()");
     temp = prompt("What would you like to call your note?");
     if (!temp) {
       return;
@@ -49,9 +51,10 @@ function saveNote() {
 }
 
 function renameNote() {
+  // console.log("prompting from renameNote()");
   var temp = prompt("What would you like to call you note?");
   if (!temp) {
-      console.log("returning because word is null");
+      // console.log("returning because word is null");
       return;
   }
   localStorage.removeItem(window.currentNote);
@@ -70,6 +73,7 @@ function createNote() {
   if (window.currentNote) {
     saveNote();
   }
+  // console.log("prompting from createNote()");
   var temp = prompt("What would you like to call your note?");
   if (!temp) {
       return;
