@@ -1,9 +1,36 @@
 <!DOCTYPE html>
 <head>
+    <title>Online Notetaker</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="methods.js"></script>
+  <link rel="stylesheet" href="main.css" />
 </head>
-<body>
+<body onload="initializeNoteTable()">
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Notetaker</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a onclick="createNote()">Create Note</a></li>
+          <li><a onclick="saveNote()">Save Note</a></li>
+          <li><a onclick="renameNote()">Rename</a></li>
+          <li><a onclick="deleteNote()">Delete</a></li>
+        </ul>
+      </div>
+    </nav>
 
-<textarea>Take notes here!</textarea>
+  <div id="container">
+    <div id="notes">
+      <table id="noteTable" class="imagetable" style="width:100%;"></table>
+    </div>
+    <div id="noteEdit">
+      <textarea id="edit" placeholder="Take notes here!" style="width:100%;height:100%;"></textarea>
+    </div>
+  </div>
 
 </body>
