@@ -26,7 +26,7 @@ table.imagetable {
 }
 
 table.imagetable th {
-	background:#b5cfd2 url('img/cell-blue.jpg');
+	background:#b5cfd2 url('images/cell-blue.jpg');
 	border-width: 1px;
 	padding: 8px;
 	border-style: solid;
@@ -34,7 +34,7 @@ table.imagetable th {
 }
 
 table.imagetable td {
-	background:#dcddc0 url('img/cell-grey.jpg');
+	background:#dcddc0 url('images/cell-grey.jpg');
 	border-width: 1px;
 	padding: 8px;
 	border-style: solid;
