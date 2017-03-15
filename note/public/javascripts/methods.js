@@ -45,7 +45,7 @@ function openNote(row) {
 
 function onNoteLoaded(response) {
     console.log("note loaded with response " + response);
-    var value = resonse["note"];
+    var value = response["note"];
     if (!value) {
         value = response.message;
     }
