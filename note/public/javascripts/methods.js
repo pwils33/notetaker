@@ -85,7 +85,7 @@ function createNote() {
     if (noteTitle) {
         currentNote = noteTitle;
         var request = url + "/createNote/" + person;
-        var note = {title:noteTite};
+        var note = {title:noteTitle};
         post(request, note);
     }
 }
