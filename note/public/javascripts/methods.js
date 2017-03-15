@@ -7,10 +7,11 @@ function onLoad() {
     while (!person) {
         person = prompt("We need some input here... Work with us");
     }
-    getNoteNames();
+    getNoteTitles();
 }
 
 function initializeNoteTable(notes) {
+    console.log("initializing table with " + notes);
     var noteTable = document.getElementById("noteTable");
     for (var i = noteTable.rows.length - 1; i >= 0; i--) {
         noteTable.deleteRow(i);
@@ -24,16 +25,10 @@ function initializeNoteTable(notes) {
     }
 }
 
-function getNoteNames() {
+function getNoteTitles() {
+    console.log("getting note titles")
     var request = url + "/noteList/" + person;
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function() {
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-            initializeNoteTable(xmlHttp.responseText);
-        }
-    }
-    xmlHttp.open("GET", request, true); // true for asynchronous
-    xmlHttp.send(null);
+    get(request, initializeNoteTable);
 }
 
 function openNote(row) {
@@ -42,11 +37,13 @@ function openNote(row) {
         saveNote(currentNote, text);
     }
     currentNote = row.cells[0].innerHTML;
+    console.log("opening note " + currentNote);
     var request = url + "/noteText/" + person + "/" + currentNote;
     get(request,onNoteLoaded);
 }
 
 function onNoteLoaded(response) {
+    console.log("note loaded with response " + response);
     var value = resonse.note;
     if (!value) {
         value = response.message;
@@ -55,19 +52,25 @@ function onNoteLoaded(response) {
 }
 
 function saveNote(noteTitle, noteText) {
+    console.log("saving note " + noteTitle);
     var note = {title:noteTitle,text:noteText};
     var request = url + "/save/" + person;
     post(request, note);
 }
 
 function renameNote() {
+    console.log("renaming note " + currentNote);
     var newTitle = prompt("What would you like to change the name to?");
-    var request = url + "/renameNote/" + person;
-    var body = {oldTitle:currentNote,update:newTitle};
-    post(request, body);
+    if (newTitle) {
+        var request = url + "/renameNote/" + person;
+        var body = {oldTitle:currentNote,update:newTitle};
+        post(request, body);
+        currentNote = newTitle;
+    }
 }
 
 function deleteNote() {
+    console.log("deleting note " + currentNote);
     var request = url + "/deleteNote/" + person;
     var note = {title:currentNote};
     post(request, note);
@@ -76,8 +79,10 @@ function deleteNote() {
 }
 
 function createNote() {
+    console.log("creating note");
     var noteTitle = prompt("What would you like to call your note?");
     if (noteTitle) {
+        currentNote = noteTitle;
         var request = url + "/createNote/" + person;
         var note = {title:noteTite};
         post(request, note);
@@ -89,7 +94,7 @@ function post(request, body) {
     xmlHttp.onreadystatechange = function() {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
             console.log(xmlHttp.responseText);
-            getNoteNames();
+            getNoteTitles();
     }
     xmlHttp.open("POST", request, true); // true for asynchronous
     xmlHttp.send(note);
