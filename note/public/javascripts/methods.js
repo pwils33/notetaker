@@ -114,6 +114,6 @@ function get(request, callback) {
     $.ajax({
         url:request,
         dataType:"json",
-        success : callback(parsed_json)
+        success : callback
     });
 }
