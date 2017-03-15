@@ -35,8 +35,8 @@ router.get('/noteText/:name/:note', function(req,res) {
     var person = pieces[2];
     var note = pieces[3];
     console.log(personMap);
-    console.log("trying to get " + note + "from " + person);
-    if (!personMap.get(person) || !personMap.get(person).get(note)) {
+    console.log("trying to get " + note + " from " + person);
+    if (!personMap.get(person) || personMap.get(person).get(note) === undefined) {
         res.send({message:"could not find note"});
     }
     res.send({note:personMap.get(person).get(note)});
