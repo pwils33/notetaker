@@ -11,6 +11,7 @@ function onLoad() {
 }
 
 function initializeNoteTable(notes) {
+    notes = notes["data"];
     console.log("initializing table with " + notes);
     var noteTable = document.getElementById("noteTable");
     for (var i = noteTable.rows.length - 1; i >= 0; i--) {
@@ -90,24 +91,29 @@ function createNote() {
 }
 
 function post(request, body) {
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function() {
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-            console.log(xmlHttp.responseText);
-            getNoteTitles();
-    }
-    xmlHttp.open("POST", request, true); // true for asynchronous
-    xmlHttp.send(note);
+    // var xmlHttp = new XMLHttpRequest();
+    // xmlHttp.onreadystatechange = function() {
+    //     if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+    //         console.log(xmlHttp.responseText);
+    //         getNoteTitles();
+    // }
+    // xmlHttp.open("POST", request, true); // true for asynchronous
+    // xmlHttp.send(note);
 }
 
 function get(request, callback) {
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function() {
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-            console.log(xmlHttp.responseText);
-            callback(xmlHttp.responseText);
-        }
-    }
-    xmlHttp.open("GET", request, true); // true for asynchronous
-    xmlHttp.send(null);
+    // var xmlHttp = new XMLHttpRequest();
+    // xmlHttp.onreadystatechange = function() {
+    //     if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+    //         console.log(xmlHttp.responseText);
+    //         callback(xmlHttp.responseText);
+    //     }
+    // }
+    // xmlHttp.open("GET", request, true); // true for asynchronous
+    // xmlHttp.send(null);
+    $ajax({
+        url:request,
+        dataType:"json",
+        success : callback(parsed_json);
+    });
 }

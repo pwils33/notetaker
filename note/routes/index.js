@@ -18,6 +18,7 @@ router.get('/noteList/:name', function(req, res) {
         }
         result = getNoteTitles(personMap.get(person));
     }
+    result = {data:result};
     res.send(result);
 });
 
