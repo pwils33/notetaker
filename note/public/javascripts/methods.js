@@ -99,18 +99,16 @@ function post(request, body) {
     // }
     // xmlHttp.open("POST", request, true); // true for asynchronous
     // xmlHttp.send(note);
+    $.ajax({
+        type:"POST",
+        url:request,
+        data:body,
+        dataType:"json",
+        success : getNoteTitles
+    });
 }
 
 function get(request, callback) {
-    // var xmlHttp = new XMLHttpRequest();
-    // xmlHttp.onreadystatechange = function() {
-    //     if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-    //         console.log(xmlHttp.responseText);
-    //         callback(xmlHttp.responseText);
-    //     }
-    // }
-    // xmlHttp.open("GET", request, true); // true for asynchronous
-    // xmlHttp.send(null);
     $.ajax({
         url:request,
         dataType:"json",
