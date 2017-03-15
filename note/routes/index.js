@@ -11,6 +11,7 @@ router.get("/noteList", function(req, res) {
   console.log("noteList api called\n\n");
   var person = req.protocol.split("/")[2];
   console.log("person");
+  res.send(person);
 });
 
 module.exports = router;
