@@ -55,7 +55,7 @@ function onNoteLoaded(response) {
 function saveNote(noteTitle, noteText) {
     console.log("saving note " + noteTitle);
     var note = {title:noteTitle,text:noteText};
-    var request = url + "/save/" + person;
+    var request = url + "/saveNote/" + person;
     post(request, note);
 }
 
