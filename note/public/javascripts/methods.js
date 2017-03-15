@@ -111,7 +111,7 @@ function get(request, callback) {
     // }
     // xmlHttp.open("GET", request, true); // true for asynchronous
     // xmlHttp.send(null);
-    $ajax({
+    $.ajax({
         url:request,
         dataType:"json",
         success : callback(parsed_json)
