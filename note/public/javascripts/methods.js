@@ -47,14 +47,15 @@ function onNoteLoaded(response) {
     console.log("note loaded with response " + response);
     console.log(response.note);
     console.log(response["note"]);
-    // var value = response["note"];
-    // if (value !== undefined) {
-    //     value = response.message;
-    // }
-    // document.getElementById("edit").value = value;
 }
 
 function saveNote(noteTitle, noteText) {
+    if (!noteTitle) {
+        noteTitle = currentNote;
+    }
+    if (!noteText) {
+        noteText = document.getElementById("edit").value;
+    }
     console.log("saving note " + noteTitle);
     var note = {title:noteTitle,text:noteText};
     var request = url + "/saveNote/" + person;
