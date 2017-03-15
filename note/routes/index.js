@@ -70,5 +70,7 @@ router.post('/renameNote/:name', function(req,res) {
 });
 
 var personMap = new Map();
+personMap.set("Patrick", new Map());
+personMap.get("Patrick").set("test","");
 
 module.exports = router;
