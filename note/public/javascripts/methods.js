@@ -104,7 +104,7 @@ function get(request, callback) {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function() {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-            console.log(xml.responseText);
+            console.log(xmlHttp.responseText);
             callback(xmlHttp.responseText);
         }
     }
