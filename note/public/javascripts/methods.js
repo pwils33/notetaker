@@ -1,85 +1,108 @@
-
 var currentNote = "";
+var person = "";
+var url = "http://54.214.125.212:3000";
 
-function initializeNoteTable() {
-  var notes = getNoteNames();
-  var noteTable = document.getElementById("noteTable");
-  for (var i = noteTable.rows.length - 1; i >= 0; i--) {
-    noteTable.deleteRow(i);
-  }
-  noteTable.innerHTML = "<th>Your Notes</th>"
-  for (var i = 0; i < notes.length; i++) {
-    var row = noteTable.insertRow(-1);
-    var cell = row.insertCell(0);
-    cell.innerHTML = notes[i];
-    row.setAttribute("onClick","openNote(this)");
-  }
+function onLoad() {
+    person = prompt("Hello! who's using notetaker today?");
+    while (!person) {
+        person = prompt("We need some input here... Work with us");
+    }
+    getNoteNames();
+}
+
+function initializeNoteTable(notes) {
+    var noteTable = document.getElementById("noteTable");
+    for (var i = noteTable.rows.length - 1; i >= 0; i--) {
+        noteTable.deleteRow(i);
+    }
+    noteTable.innerHTML = "<th>Your Notes</th>"
+    for (var i = 0; i < notes.length; i++) {
+        var row = noteTable.insertRow(-1);
+        var cell = row.insertCell(0);
+        cell.innerHTML = notes[i];
+        row.setAttribute("onClick","openNote(this)");
+    }
 }
 
 function getNoteNames() {
-  var notes = [];
-  for (var i = 0; i < localStorage.length; i++) {
-    notes.push(localStorage.key(i));
-  }
-  return notes;
+    var request = url + "/noteList/" + person;
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+            initializeNoteTable(xmlHttp.responseText);
+        }
+    }
+    xmlHttp.open("GET", request, true); // true for asynchronous
+    xmlHttp.send(null);
 }
 
 function openNote(row) {
-  if (window.currentNote) {
-    // console.log("saving note "  + window.currentNote);
-    saveNote();
-  }
-  var key = row.cells[0].innerHTML;
-  window.currentNote = key;
-  // console.log("I got called with " + key);
-  document.getElementById("edit").value = localStorage.getItem(key);
+    if (currentNote) {
+        var text = document.getElementById("edit").value;
+        saveNote(currentNote, text);
+    }
+    currentNote = row.cells[0].innerHTML;
+    var request = url + "/noteText/" + person + "/" + currentNote;
+    get(request,onNoteLoaded);
 }
 
-function saveNote() {
-  var note = document.getElementById("edit").value;
-  var temp;
-  if (!window.currentNote) {
-    // console.log("prompting from saveNote()");
-    temp = prompt("What would you like to call your note?");
-    if (!temp) {
-      return;
+function onNoteLoaded(response) {
+    var value = resonse.note;
+    if (!value) {
+        value = response.message;
     }
-    window.currentNote = temp;
-  }
-  localStorage.setItem(window.currentNote,note);
-  initializeNoteTable();
+    document.getElementById("edit").value = value;
+}
+
+function saveNote(noteTitle, noteText) {
+    var note = {title:noteTitle,text:noteText};
+    var request = url + "/save/" + person;
+    post(request, note);
 }
 
 function renameNote() {
-  // console.log("prompting from renameNote()");
-  var temp = prompt("What would you like to call you note?");
-  if (!temp) {
-      // console.log("returning because word is null");
-      return;
-  }
-  localStorage.removeItem(window.currentNote);
-  window.currentNote = temp;
-  localStorage.setItem(window.currentNote,document.getElementById("edit").value);
+    var newTitle = prompt("What would you like to change the name to?");
+    var request = url + "/renameNote/" + person;
+    var body = {oldTitle:currentNote,update:newTitle};
+    post(request, body);
 }
 
 function deleteNote() {
-  localStorage.removeItem(window.currentNote);
-  window.currentNote = "";
-  document.getElementById("edit").value = "";
-  initializeNoteTable();
+    var request = url + "/deleteNote/" + person;
+    var note = {title:currentNote};
+    post(request, note);
+    currentNote = "";
+    document.getElementById("edit").value = "";
 }
 
 function createNote() {
-  if (window.currentNote) {
-    saveNote();
-  }
-  // console.log("prompting from createNote()");
-  var temp = prompt("What would you like to call your note?");
-  if (!temp) {
-      return;
-  }
-  window.currentNote = temp;
-  document.getElementById("edit").value = "";
-  localStorage.setItem(window.currentNote,"");
-  initializeNoteTable();
+    var noteTitle = prompt("What would you like to call your note?");
+    if (noteTitle) {
+        var request = url + "/createNote/" + person;
+        var note = {title:noteTite};
+        post(request, note);
+    }
+}
+
+function post(request, body) {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            console.log(xmlHttp.responseText);
+            getNoteNames();
+    }
+    xmlHttp.open("POST", request, true); // true for asynchronous
+    xmlHttp.send(note);
+}
+
+function get(request, callback) {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+            console.log(xml.responseText);
+            callback(xmlHttp.responseText);
+        }
+    }
+    xmlHttp.open("GET", request, true); // true for asynchronous
+    xmlHttp.send(null);
 }
