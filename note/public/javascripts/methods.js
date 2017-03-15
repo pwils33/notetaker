@@ -45,6 +45,7 @@ function openNote(row) {
 
 function onNoteLoaded(response) {
     console.log("note loaded with response " + response);
+    console.log(response);
     var value = response["note"];
     if (!value) {
         value = response.message;
@@ -91,14 +92,6 @@ function createNote() {
 }
 
 function post(request, body) {
-    // var xmlHttp = new XMLHttpRequest();
-    // xmlHttp.onreadystatechange = function() {
-    //     if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-    //         console.log(xmlHttp.responseText);
-    //         getNoteTitles();
-    // }
-    // xmlHttp.open("POST", request, true); // true for asynchronous
-    // xmlHttp.send(note);
     $.ajax({
         type:"POST",
         url:request,
