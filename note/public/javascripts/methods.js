@@ -45,12 +45,13 @@ function openNote(row) {
 
 function onNoteLoaded(response) {
     console.log("note loaded with response " + response);
-    console.log(response);
-    var value = response["note"];
-    if (value !== undefined) {
-        value = response.message;
-    }
-    document.getElementById("edit").value = value;
+    console.log(response.note);
+    console.log(response["note"]);
+    // var value = response["note"];
+    // if (value !== undefined) {
+    //     value = response.message;
+    // }
+    // document.getElementById("edit").value = value;
 }
 
 function saveNote(noteTitle, noteText) {
