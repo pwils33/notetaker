@@ -56,10 +56,11 @@ function saveNote(noteTitle, noteText) {
     if (!noteTitle) {
         if (!currentNote) {
             currentNote = prompt("what would you like to call your note?")
+            noteText = "";
         }
         noteTitle = currentNote;
     }
-    if (!noteText) {
+    if (noteText === undefined) {
         noteText = document.getElementById("edit").value;
     }
     if (currentNote) {
