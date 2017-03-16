@@ -54,15 +54,20 @@ function onNoteLoaded(response) {
 
 function saveNote(noteTitle, noteText) {
     if (!noteTitle) {
+        if (!currentNote) {
+            currentNote = prompt("what would you like to call your note?")
+        }
         noteTitle = currentNote;
     }
     if (!noteText) {
         noteText = document.getElementById("edit").value;
     }
-    console.log("saving note " + noteTitle);
-    var note = {title:noteTitle,text:noteText};
-    var request = url + "/saveNote/" + person;
-    post(request, note);
+    if (currentNote) {
+        console.log("saving note " + noteTitle);
+        var note = {title:noteTitle,text:noteText};
+        var request = url + "/saveNote/" + person;
+        post(request, note);
+    }
 }
 
 function renameNote() {
