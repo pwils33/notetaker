@@ -95,7 +95,9 @@ function createNote() {
     console.log("creating note");
     var noteTitle = prompt("What would you like to call your note?");
     if (noteTitle) {
+        saveNote(currentNote, document.getElementById("edit").value);
         currentNote = noteTitle;
+        document.getElementById("edit").value = "";
         var request = url + "/createNote/" + person;
         var note = {title:noteTitle};
         post(request, note);
